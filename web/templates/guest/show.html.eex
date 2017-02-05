@@ -1,0 +1,18 @@
+<h2>Show guest</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @guest.name %>
+  </li>
+
+  <li>
+    <strong>Age:</strong>
+    <%= @guest.age %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: guest_path(@conn, :edit, @guest) %>
+<%= link "Back", to: guest_path(@conn, :index) %>

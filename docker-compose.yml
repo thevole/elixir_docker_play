@@ -1,0 +1,42 @@
+version: '2'
+services:
+    db:
+        image: postgres
+        volumes:
+            - ./pg:/var/lib/postgresql/data
+    dev:
+        build:
+            context: .
+            dockerfile: Dockerfile-dev
+        command: mix phoenix.server
+        # command: 'iex -S mix phoenix.server'
+        # command: iex
+        volumes:
+            - .:/app
+        ports:
+            - '4000:4000'
+        depends_on:
+            - db
+        environment:
+            - MIX_ENV=dev
+            - LANG=en_US-UTF-8 
+            - LANGUAGE=en_US.UTF-8
+            - LC_ALL=en_US.UTF-8
+    web:
+        build: .
+        # command: mix phoenix.server
+        # command: 'iex -S mix phoenix.server'
+        # command: iex
+        command: _build/prod/rel/hello_world/bin/hello_world foreground
+        volumes:
+            - .:/app
+        ports:
+            - '4001:4000'
+        depends_on:
+            - db
+        environment:
+            - MIX_ENV=prod
+            - PORT=4000
+            - LANG=en_US-UTF-8 
+            - LANGUAGE=en_US.UTF-8
+            - LC_ALL=en_US.UTF-8
